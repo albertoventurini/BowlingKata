@@ -5,12 +5,18 @@ namespace BowlingKataTest
 {
     public class GameTest
     {
+        private Game _game;
+
+        [SetUp]
+        public void initNewGame()
+        {
+            _game = new Game();
+        }
+
         [Test]
         public void Score_NewGame_Returns0()
         {
-            var game = new Game();
-
-            var score = game.Score();
+            var score = _game.Score();
 
             Assert.AreEqual(0, score);
         }
@@ -19,11 +25,9 @@ namespace BowlingKataTest
         [Test]
         public void ScoreIsNumberOfPinsAfterFirstRoll()
         {
-            Game game = new Game();
-
             const int numberOfPins = 9;
-            game.Roll(numberOfPins);
-            int score = game.Score();
+            _game.Roll(numberOfPins);
+            int score = _game.Score();
 
             Assert.AreEqual(numberOfPins, score);
         }
