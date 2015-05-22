@@ -16,5 +16,16 @@ namespace BowlingKataTest
         }
 
 
+        [Test]
+        public void ScoreIsNumberOfPinsAfterFirstRoll()
+        {
+            Game game = new Game();
+
+            const int numberOfPins = 9;
+            game.Roll(numberOfPins);
+            int score = game.Score();
+
+            Assert.AreEqual(numberOfPins, score);
+        }
     }
 }

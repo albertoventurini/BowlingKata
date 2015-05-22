@@ -2,9 +2,16 @@
 {
     public class Game
     {
+        private int _score = 0;
+
         public int Score()
         {
-            return 0;
+            return _score;
+        }
+
+        public void Roll(int pins)
+        {
+            _score = pins;
         }
     }
 }
