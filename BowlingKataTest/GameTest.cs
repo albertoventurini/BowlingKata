@@ -1,4 +1,5 @@
-﻿using BowlingKata;
+﻿using System.Linq;
+using BowlingKata;
 using NUnit.Framework;
 
 namespace BowlingKataTest
@@ -16,19 +17,15 @@ namespace BowlingKataTest
         [Test]
         public void Score_NewGame_Returns0()
         {
-            var score = _game.Score();
-
-            Assert.AreEqual(0, score);
+            AssertScoreIsCorrectAfterSequence(0);
         }
 
         [Test]
         public void ScoreIsNumberOfPinsAfterFirstRoll()
         {
             const int numberOfPins = 9;
-            _game.Roll(numberOfPins);
-            int score = _game.Score();
 
-            Assert.AreEqual(numberOfPins, score);
+            AssertScoreIsCorrectAfterSequence(numberOfPins, numberOfPins);
         }
 
         [Test]
@@ -37,11 +34,7 @@ namespace BowlingKataTest
             const int numberOfPins1 = 9;
             const int numberOfPins2 = 7;
 
-            _game.Roll(numberOfPins1);
-            _game.Roll(numberOfPins2);
-            int score = _game.Score();
-
-            Assert.AreEqual(numberOfPins1 + numberOfPins2, score);
+            AssertScoreIsCorrectAfterSequence(numberOfPins1 + numberOfPins2, numberOfPins1, numberOfPins2);
         }
 
         [Test]
@@ -50,15 +43,16 @@ namespace BowlingKataTest
             const int numberOfPins11 = 9;
             const int numberOfPins12 = 1;
             const int numberOfPins2 = 5;
-
-            _game.Roll(numberOfPins11);
-            _game.Roll(numberOfPins12);
-            _game.Roll(numberOfPins2);
-            int score = _game.Score();
-
-
             const int firstTurnScore = numberOfPins11 + numberOfPins12 + numberOfPins2;
-            Assert.AreEqual(firstTurnScore + numberOfPins2, score);
+
+            AssertScoreIsCorrectAfterSequence(firstTurnScore + numberOfPins2, numberOfPins11, numberOfPins12, numberOfPins2);
+        }
+
+        private void AssertScoreIsCorrectAfterSequence(int expected, params int[] rolls)
+        {
+            rolls.ToList().ForEach(_game.Roll);
+            int score = _game.Score();
+            Assert.AreEqual(expected, score);
         }
     }
 }
