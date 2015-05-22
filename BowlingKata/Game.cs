@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BowlingKata
 {
@@ -6,6 +7,7 @@ namespace BowlingKata
     {
         private int _score = 0;
         private int _lastRoll;
+        private Boolean _isFirstRollInTurn = true;
         private Boolean _lastTurnWasSpare = false;
 
         public int Score()
@@ -21,10 +23,11 @@ namespace BowlingKata
                 _score += pins;
                 _lastTurnWasSpare = false;
             }
-            if (pins + _lastRoll == 10)
+            if (pins + _lastRoll == 10 && !_isFirstRollInTurn)
             {
                 _lastTurnWasSpare = true;
             }
+            _isFirstRollInTurn = ! _isFirstRollInTurn;
             _lastRoll = pins;
         }
     }

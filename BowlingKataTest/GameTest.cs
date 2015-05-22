@@ -48,6 +48,12 @@ namespace BowlingKataTest
             AssertScoreIsCorrectAfterSequence(firstTurnScore + numberOfPins2, numberOfPins11, numberOfPins12, numberOfPins2);
         }
 
+        [Test]
+        public void SparesAreOnlyRollsInSameTurn()
+        {
+            AssertScoreIsCorrectAfterSequence(16, 1, 8, 2, 5);
+        }
+
         private void AssertScoreIsCorrectAfterSequence(int expected, params int[] rolls)
         {
             rolls.ToList().ForEach(_game.Roll);
