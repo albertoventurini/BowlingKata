@@ -21,7 +21,6 @@ namespace BowlingKataTest
             Assert.AreEqual(0, score);
         }
 
-
         [Test]
         public void ScoreIsNumberOfPinsAfterFirstRoll()
         {
@@ -30,6 +29,19 @@ namespace BowlingKataTest
             int score = _game.Score();
 
             Assert.AreEqual(numberOfPins, score);
+        }
+
+        [Test]
+        public void ScoreIsSumOfPinsAfterTwoRolls()
+        {
+            const int numberOfPins1 = 9;
+            const int numberOfPins2 = 7;
+
+            _game.Roll(numberOfPins1);
+            _game.Roll(numberOfPins2);
+            int score = _game.Score();
+
+            Assert.AreEqual(numberOfPins1 + numberOfPins2, score);
         }
     }
 }

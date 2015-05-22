@@ -11,7 +11,7 @@
 
         public void Roll(int pins)
         {
-            _score = pins;
+            _score += pins;
         }
     }
 }
