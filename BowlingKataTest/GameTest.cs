@@ -43,5 +43,22 @@ namespace BowlingKataTest
 
             Assert.AreEqual(numberOfPins1 + numberOfPins2, score);
         }
+
+        [Test]
+        public void ScoreIsCorrectAfterSpareAndRoll()
+        {
+            const int numberOfPins11 = 9;
+            const int numberOfPins12 = 1;
+            const int numberOfPins2 = 5;
+
+            _game.Roll(numberOfPins11);
+            _game.Roll(numberOfPins12);
+            _game.Roll(numberOfPins2);
+            int score = _game.Score();
+
+
+            const int firstTurnScore = numberOfPins11 + numberOfPins12 + numberOfPins2;
+            Assert.AreEqual(firstTurnScore + numberOfPins2, score);
+        }
     }
 }
