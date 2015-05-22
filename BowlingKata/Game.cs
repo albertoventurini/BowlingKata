@@ -23,12 +23,17 @@ namespace BowlingKata
                 _score += pins;
                 _lastTurnWasSpare = false;
             }
-            if (pins + _lastRoll == 10 && !_isFirstRollInTurn)
+            if (IsSpare(pins))
             {
                 _lastTurnWasSpare = true;
             }
             _isFirstRollInTurn = ! _isFirstRollInTurn;
             _lastRoll = pins;
+        }
+
+        private bool IsSpare(int pins)
+        {
+            return !_isFirstRollInTurn && (pins + _lastRoll == 10);
         }
     }
 }
