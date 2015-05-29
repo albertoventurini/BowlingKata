@@ -1,39 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace BowlingKata
 {
     public class Game
     {
-        private int _score = 0;
-        private int _lastRoll;
-        private Boolean _isFirstRollInTurn = true;
-        private Boolean _lastTurnWasSpare = false;
+        private Turn _currentTurn;
+        private readonly List<Turn> _turns;
+
+        public Game()
+        {
+            _currentTurn = new Turn();
+            _turns = new List<Turn> {_currentTurn};
+        }
 
         public int Score()
         {
-            return _score;
+            return _turns.Sum(x => x.Score());
         }
 
         public void Roll(int pins)
         {
-            _score += pins;
-            if (_lastTurnWasSpare)
+            _turns.ForEach(x => x.Update(pins));
+            if (_currentTurn.IsFinished())
             {
-                _score += pins;
-                _lastTurnWasSpare = false;
+                if (_turns.Count() < 10)
+                {
+                    _currentTurn = new Turn();
+                    _turns.Add(_currentTurn);
+                }
             }
-            if (IsSpare(pins))
-            {
-                _lastTurnWasSpare = true;
-            }
-            _isFirstRollInTurn = ! _isFirstRollInTurn;
-            _lastRoll = pins;
-        }
-
-        private bool IsSpare(int pins)
-        {
-            return !_isFirstRollInTurn && (pins + _lastRoll == 10);
         }
     }
 }

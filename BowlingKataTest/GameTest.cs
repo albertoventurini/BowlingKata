@@ -4,16 +4,8 @@ using NUnit.Framework;
 
 namespace BowlingKataTest
 {
-    public class GameTest
+    public class GameTest : BaseGameTest
     {
-        private Game _game;
-
-        [SetUp]
-        public void initNewGame()
-        {
-            _game = new Game();
-        }
-
         [Test]
         public void Score_NewGame_Returns0()
         {
@@ -31,7 +23,7 @@ namespace BowlingKataTest
         [Test]
         public void ScoreIsSumOfPinsAfterTwoRolls()
         {
-            const int numberOfPins1 = 9;
+            const int numberOfPins1 = 2;
             const int numberOfPins2 = 7;
 
             AssertScoreIsCorrectAfterSequence(numberOfPins1 + numberOfPins2, numberOfPins1, numberOfPins2);
@@ -53,6 +45,13 @@ namespace BowlingKataTest
         {
             AssertScoreIsCorrectAfterSequence(16, 1, 8, 2, 5);
         }
+
+        [Test]
+        public void ScoreIsCorrectAfterStrikeAndRoll()
+        {
+            AssertScoreIsCorrectAfterSequence(20, 10, 5);
+        }
+
 
         private void AssertScoreIsCorrectAfterSequence(int expected, params int[] rolls)
         {
